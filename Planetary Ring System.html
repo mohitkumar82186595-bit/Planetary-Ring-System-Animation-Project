@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planetary Ring System</title>
+<style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at top,#1d2d50,#02020d 70%);
+}
+
+.stars{
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(#fff 1px,transparent 2px) 0 0/80px 80px,
+    radial-gradient(#fff8 1px,transparent 2px) 40px 40px/120px 120px;
+    animation:twinkle 4s linear infinite;
+}
+
+.scene{
+    perspective:900px;
+}
+
+.planet{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    position:relative;
+    background:
+    radial-gradient(circle at 30% 30%,#ffe9b0,#ff9f43,#6b3f00);
+    box-shadow:0 0 60px #ffb347;
+    animation:spin 12s linear infinite;
+}
+
+.ring{
+    position:absolute;
+    width:270px;
+    height:70px;
+    border:8px solid rgba(255,255,255,.45);
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotateX(75deg);
+    box-shadow:0 0 20px #fff5;
+}
+
+.moon{
+    position:absolute;
+    width:18px;
+    height:18px;
+    background:#ddd;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform-origin:-120px center;
+    animation:orbit 5s linear infinite;
+}
+
+@keyframes orbit{
+    from{
+        transform:rotate(0deg) translateX(120px);
+    }
+    to{
+        transform:rotate(360deg) translateX(120px);
+    }
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes twinkle{
+    50%{
+        opacity:.6;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="scene">
+    <div class="planet">
+        <div class="ring"></div>
+        <div class="moon"></div>
+    </div>
+</div>
+
+<script>
+    const scene = document.querySelector(".scene");
+
+document.addEventListener("mousemove", e => {
+
+const x = (e.clientX / innerWidth - .5) * 20;
+const y = (e.clientY / innerHeight - .5) * -20;
+
+scene.style.transform =
+`rotateY(${x}deg) rotateX(${y}deg)`;
+
+});
+</script>
+</body>
+</html>
